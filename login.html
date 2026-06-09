@@ -181,6 +181,7 @@
         <h3 style="margin-top:0; border-bottom: 2px solid #86efac; color: #166534; font-size: 18px; font-weight: 800;">🏦 Overall Kosh Summary (All 6 Members)</h3>
         <div class="summary-grid">
           <div class="summary-item"><label>Total Deposit</label><div id="sum-all-deposit">-</div></div>
+          <div class="summary-item"><label>Total Fine</label><div id="sum-all-fine" style="color: #dc2626;">-</div></div>
           <div class="summary-item"><label>Ongoing Loan Amt</label><div id="sum-all-loan-amt">-</div></div>
           <div class="summary-item"><label>Balance after Loan</label><div id="sum-all-balance-after-loan" style="color: #2563eb;">-</div></div>
           <div class="summary-item"><label>Current Install. Paid</label><div id="sum-all-loan-install">-</div></div>
@@ -384,7 +385,7 @@
     </div>
   </div>
 
-    <script>
+  <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRFiNkrWT0zdyUNsHUiW9bMh5DbqV0UZ-pnRMhfTmtxeCi8Vw6OWcv53lBLt8b6p3m/exec";
     let currentTabName = '', currentUserRole = 'Member', isEditMode = false, currentTransactionsData = [];
     let currentMemberName = ''; 
@@ -507,6 +508,7 @@
         if (res.success && res.data) {
           const fmt = (val) => { const num = parseFloat(val); return (isNaN(num)) ? "0.00" : num.toFixed(2); };
           document.getElementById('sum-all-deposit').textContent = fmt(res.data.deposit);
+          document.getElementById('sum-all-fine').textContent = fmt(res.data.fine); // ADDED TOTAL FINE HERE
           document.getElementById('sum-all-loan-amt').textContent = fmt(res.data.loanAmt);
           document.getElementById('sum-all-balance-after-loan').textContent = fmt(res.data.balanceAfterLoan);
           document.getElementById('sum-all-loan-install').textContent = fmt(res.data.loanInstall);
@@ -574,7 +576,6 @@
       toggleLoading('store-btn', false, btnText);
     }
 
-    // UPDATED: Never returns blank, always returns "0.00" for missing/zero values
     const fmt = (val) => { 
       if (val === "" || val === null || val === undefined) return "0.00"; 
       const num = parseFloat(val); 
@@ -773,7 +774,6 @@
             tbody.appendChild(tr);
           });
           
-          // These IDs exactly match the HTML tfoot IDs
           document.getElementById('print-loan-amt').textContent = fmt(totals.loanAmt);
           document.getElementById('print-current-loan-interest').textContent = fmt(totals.currentLoanInterest);
           document.getElementById('print-total-loan-interest').textContent = fmt(totals.totalLoanInterest);
