@@ -5,195 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GMS Bachat Kosh</title>
   <style>
-    /* GLOBAL & PREMIUM BACKGROUND */
-    body { 
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%); 
-      margin: 0; 
-      padding: 20px; 
-      color: #333; 
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container { 
-      width: 100%;
-      max-width: 950px; 
-      background: rgba(255, 255, 255, 0.98); 
-      padding: 40px; 
-      border-radius: 20px; 
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    /* PREMIUM LOGIN VIEW STYLING */
-    #login-view {
-      max-width: 420px;
-      margin: 0 auto;
-      text-align: center;
-      animation: fadeInUp 0.6s ease-out;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .login-icon {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
-    }
-    .login-icon svg { width: 32px; height: 32px; color: white; }
-
-    #login-view h2 { 
-      font-size: 28px; 
-      font-weight: 800; 
-      color: #0f172a; 
-      margin: 0 0 8px 0; 
-      letter-spacing: -0.5px;
-    }
+    body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%); margin: 0; padding: 10px; color: #333; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 950px; background: rgba(255, 255, 255, 0.98); padding: 20px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); transition: all 0.3s ease; margin-top: 10px; margin-bottom: 10px; }
+    @media (min-width: 768px) { .container { padding: 30px 40px; margin-top: 40px; } }
     
-    .login-subtitle {
-      color: #64748b;
-      font-size: 15px;
-      margin-bottom: 30px;
-      font-weight: 500;
-    }
-
-    /* FORM ELEMENTS */
+    h2 { text-align: center; color: #0f172a; margin-top: 0; }
+    h3 { color: #555; border-bottom: 2px solid #1a73e8; padding-bottom: 5px; margin-top: 25px; }
+    h4 { margin-top: 0; color: #1e3a8a; border-bottom: 2px solid #bfdbfe; padding-bottom: 8px; font-size: 16px; font-weight: 800; }
+    
     .form-group { margin-bottom: 20px; text-align: left; }
     .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
     .form-row .form-group { flex: 1; min-width: 120px; }
     
-    label { 
-      display: block; 
-      margin-bottom: 8px; 
-      font-weight: 600; 
-      color: #334155; 
-      font-size: 13px; 
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #334155; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    input, select { width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px; box-sizing: border-box; font-size: 15px; background-color: #f8fafc; transition: all 0.2s ease; color: #0f172a; }
+    input:focus, select:focus { border-color: #3b82f6; background-color: #ffffff; outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
     
-    input, select { 
-      width: 100%; 
-      padding: 14px 16px; 
-      border: 2px solid #e2e8f0; 
-      border-radius: 12px; 
-      box-sizing: border-box; 
-      font-size: 15px; 
-      background-color: #f8fafc;
-      transition: all 0.2s ease;
-      color: #0f172a;
-    }
-    
-    input:focus, select:focus { 
-      border-color: #3b82f6; 
-      background-color: #ffffff;
-      outline: none; 
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    }
-
-    /* PREMIUM BUTTONS */
-    button { 
-      width: 100%; 
-      padding: 14px; 
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
-      color: white; 
-      border: none; 
-      border-radius: 12px; 
-      cursor: pointer; 
-      font-size: 16px; 
-      font-weight: 700; 
-      margin-top: 10px; 
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-      letter-spacing: 0.3px;
-    }
-    
-    button:hover { 
-      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
-    }
-    
+    button { width: 100%; padding: 14px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: 700; margin-top: 10px; transition: all 0.2s ease; box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39); letter-spacing: 0.3px; }
+    button:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23); }
     button:active { transform: translateY(0); }
     button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
     
-    .secondary-btn { 
-      background: transparent; 
-      color: #2563eb; 
-      border: 2px solid #e2e8f0; 
-      box-shadow: none;
-      margin-top: 12px;
-    }
-    .secondary-btn:hover { 
-      background: #eff6ff; 
-      border-color: #bfdbfe; 
-      color: #1d4ed8;
-      transform: translateY(0);
-      box-shadow: none;
-    }
-    
+    .secondary-btn { background: transparent; color: #2563eb; border: 2px solid #e2e8f0; box-shadow: none; margin-top: 12px; }
+    .secondary-btn:hover { background: #eff6ff; border-color: #bfdbfe; color: #1d4ed8; transform: translateY(0); box-shadow: none; }
     .cancel-btn { background: #64748b; box-shadow: 0 4px 14px 0 rgba(100, 116, 139, 0.39); }
     .cancel-btn:hover { background: #475569; box-shadow: 0 6px 20px rgba(100, 116, 139, 0.23); }
-    
-    .logout-btn { 
-      background: #ef4444; 
-      width: auto; 
-      padding: 10px 16px; 
-      margin: 0; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
-    }
+    .logout-btn { background: #ef4444; width: auto; padding: 10px 16px; margin: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39); }
     .logout-btn:hover { background: #dc2626; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.23); }
-    
-    .print-btn { 
-      background: #475569; 
-      width: auto; 
-      padding: 10px 16px; 
-      margin-left: 10px; 
-      display: inline-flex; 
-      align-items: center; 
-      gap: 6px; 
-      font-size: 14px; 
-      box-shadow: 0 4px 14px 0 rgba(71, 85, 105, 0.39);
-    }
+    .print-btn { background: #475569; width: auto; padding: 10px 16px; margin-left: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; box-shadow: 0 4px 14px 0 rgba(71, 85, 105, 0.39); }
     .print-btn:hover { background: #334155; box-shadow: 0 6px 20px rgba(71, 85, 105, 0.23); transform: translateY(-2px); }
-
-    .hidden { display: none !important; }
     
-    .message { 
-      padding: 14px; 
-      margin-bottom: 20px; 
-      border-radius: 12px; 
-      text-align: center; 
-      font-size: 14px; 
-      font-weight: 600; 
-    }
+    .hidden { display: none !important; }
+    .message { padding: 14px; margin-bottom: 20px; border-radius: 12px; text-align: center; font-size: 14px; font-weight: 600; }
     .success { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
     .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
     
-    /* DASHBOARD SPECIFIC OVERRIDES */
-    #dashboard-view .container {
-      /* Reset some login-specific styles for the dashboard */
-      max-width: 950px;
-      padding: 30px;
-    }
-    
-    .table-container { overflow-y: auto; max-height: 500px; margin-top: 15px; border: 1px solid #e2e8f0; border-radius: 12px; }
+    .table-container { overflow-x: auto; max-height: 500px; margin-top: 15px; border: 1px solid #e2e8f0; border-radius: 12px; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 850px; }
     th, td { border: 1px solid #e2e8f0; padding: 12px 10px; text-align: right; }
     th:first-child, td:first-child { text-align: left; }
@@ -208,55 +55,51 @@
     .edit-btn:hover { background: #d97706; transform: translateY(-1px); }
     
     .admin-controls { background-color: #eff6ff; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #bfdbfe; display: flex; flex-direction: column; gap: 15px; }
-    .control-row { display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end; }
-    .control-group { flex: 1; min-width: 150px; }
+    .control-row { display: flex; flex-direction: column; gap: 15px; }
+    @media (min-width: 768px) { .control-row { flex-direction: row; align-items: flex-end; } }
+    .control-group { flex: 1; min-width: 100%; }
+    @media (min-width: 768px) { .control-group { min-width: 150px; } }
     .control-group label { margin-bottom: 6px; font-size: 12px; color: #1e40af; font-weight: 700; display: block; }
     .control-group select { width: 100%; margin-top: 0; background: white; }
-    .btn-group { flex: 0 0 auto; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-group { flex: 0 0 auto; display: flex; gap: 10px; flex-wrap: wrap; width: 100%; }
+    @media (min-width: 768px) { .btn-group { width: auto; } }
 
     .kosh-summary, .loan-summary { background-color: #f0fdf4; padding: 24px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #bbf7d0; }
     .loan-summary { background-color: #eff6ff; border: 1px solid #bfdbfe; }
-    .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; margin-top: 15px; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; text-align: center; margin-top: 15px; }
     .summary-item { background: white; padding: 18px 10px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s; }
     .summary-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
     .summary-item label { display: block; font-size: 12px; color: #64748b; margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
     .summary-item div { font-weight: 800; font-size: 20px; color: #0f172a; }
     
     .section-title { font-size: 14px; font-weight: 800; color: #1e40af; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; }
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; gap: 10px; }
     .dashboard-header h2 { text-align: left; margin: 0; font-size: 24px; font-weight: 800; color: #0f172a; }
 
-    /* Info Section Styles */
     .info-section { background: #f8fafc; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
-    .info-grid { display: flex; flex-wrap: wrap; gap: 30px; }
-    .info-block { flex: 1; min-width: 280px; }
-    .info-block h4 { margin-top: 0; color: #1e3a8a; border-bottom: 2px solid #bfdbfe; padding-bottom: 8px; font-size: 16px; font-weight: 800; }
+    .info-grid { display: flex; flex-direction: column; gap: 20px; }
+    @media (min-width: 768px) { .info-grid { flex-direction: row; } }
+    .info-block { flex: 1; min-width: 100%; }
+    @media (min-width: 768px) { .info-block { min-width: 280px; } }
     .contact-list { list-style: none; padding: 0; margin: 0; line-height: 2.2; }
     .contact-list a { color: #2563eb; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s; }
     .contact-list a:hover { color: #1d4ed8; text-decoration: underline; }
-    .account-number { font-family: 'Courier New', Courier, monospace; font-size: 16px; background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-weight: 800; color: #1e40af; letter-spacing: 0.5px; }
+    .account-number { font-family: 'Courier New', Courier, monospace; font-size: 16px; background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-weight: 800; color: #1e40af; letter-spacing: 0.5px; word-break: break-all; }
 
-    /* PRINT STYLES */
     #print-area, #print-monthly-area, #print-loan-details-area { display: none; }
     @page { size: A4 portrait; margin: 1.5cm; }
     @media print {
-      body { background: white; display: block; }
+      body { background: white; display: block; padding: 0; }
       body * { visibility: hidden; }
-      #print-area.active-print, #print-area.active-print *,
-      #print-monthly-area.active-print, #print-monthly-area.active-print *,
-      #print-loan-details-area.active-print, #print-loan-details-area.active-print * { visibility: visible; }
-      
-      #print-area.active-print, #print-monthly-area.active-print, #print-loan-details-area.active-print {
-        display: block !important; position: absolute; left: 0; top: 0; width: 100%; max-width: 100%;
-        background: white; color: black; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;
-      }
+      #print-area.active-print, #print-area.active-print *, #print-monthly-area.active-print, #print-monthly-area.active-print *, #print-loan-details-area.active-print, #print-loan-details-area.active-print * { visibility: visible; }
+      #print-area.active-print, #print-monthly-area.active-print, #print-loan-details-area.active-print { display: block !important; position: absolute; left: 0; top: 0; width: 100%; max-width: 100%; background: white; color: black; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box; }
       .print-header { text-align: center; border-bottom: 3px double #000; padding-bottom: 15px; margin-bottom: 25px; }
       .print-header h1 { margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; }
       .print-header h2 { margin: 5px 0 0; font-size: 16px; color: #333; font-weight: normal; }
       .print-info { display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 14px; }
       .print-info p { margin: 5px 0; word-wrap: break-word; }
-      .print-table { width: 100%; max-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; table-layout: fixed; }
-      .print-table th, .print-table td { border: 1px solid #000; padding: 10px; text-align: left; word-wrap: break-word; }
+      .print-table { width: 100%; max-width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; table-layout: fixed; }
+      .print-table th, .print-table td { border: 1px solid #000; padding: 8px 6px; text-align: left; word-wrap: break-word; }
       .print-table th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold; }
       .print-table .amount-col { text-align: right; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
       .print-table .highlight { background-color: #fff3cd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -267,42 +110,28 @@
 </head>
 <body>
   <div class="container">
-    <!-- PREMIUM LOGIN VIEW -->
     <div id="login-view">
-      <div class="login-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-        </svg>
+      <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
       </div>
-      <h2>GMS Bachat Kosh</h2>
-      <p class="login-subtitle">Secure Member Portal</p>
-      
+      <h2 style="font-size: 28px; font-weight: 800; color: #0f172a; margin: 0 0 8px 0; letter-spacing: -0.5px;">GMS Bachat Kosh</h2>
+      <p style="color: #64748b; font-size: 15px; margin-bottom: 30px; font-weight: 500;">Secure Member Portal</p>
       <div id="login-msg" class="message hidden"></div>
-      
-      <div class="form-group">
-        <label for="login-username">Username</label>
-        <input type="text" id="login-username" placeholder="Enter your username" autocomplete="username">
-      </div>
-      <div class="form-group">
-        <label for="login-password">Password</label>
-        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
-      </div>
+      <div class="form-group"><label>Username</label><input type="text" id="login-username" placeholder="Enter your username"></div>
+      <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="Enter your password"></div>
       <button id="login-btn" onclick="handleLogin()">Sign In Securely</button>
     </div>
 
-    <!-- DASHBOARD VIEW -->
     <div id="dashboard-view" class="hidden">
       <div class="dashboard-header">
         <h2 id="welcome-msg">Welcome</h2>
         <button class="logout-btn" onclick="logout()" title="Logout">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap=" round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
           Logout
         </button>
       </div>
       <div id="dash-msg" class="message hidden"></div>
       
-      <!-- BANK & CONTACT INFO (Collapsible) -->
       <button class="secondary-btn" onclick="toggleInfoSection()" style="width: 100%; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600;">
         <span>📞 Bank & Contact Details</span>
         <span id="info-toggle-icon">▼</span>
@@ -330,38 +159,36 @@
         </div>
       </div>
       
-      <!-- MEMBER LOAN SUMMARY -->
       <div id="member-loan-summary" class="loan-summary hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
           <h3 style="margin:0; border:none; color: #1e40af; font-size: 18px; font-weight: 800;">💳 Member Loan & Financial Status</h3>
           <button id="admin-print-btn" class="print-btn hidden" onclick="printMemberDetails()">🖨️ Print Statement</button>
         </div>
         <div class="summary-grid">
           <div class="summary-item"><label>Total Deposit</label><div id="member-loan-amt" style="color: #2563eb;">-</div></div>
           <div class="summary-item"><label>Total Fine</label><div id="member-fine" style="color: #dc2626;">-</div></div>
-          <div class="summary-item"><label>Total Loan Amount</label><div id="member-total-loan" style="color: #2563eb;">-</div></div>
-          <div class="summary-item"><label>Total Loan Interest</label><div id="member-loan-interest" style="color: #2563eb;">-</div></div>
-          <div class="summary-item"><label>Installment Paid</label><div id="member-loan-install" style="color: #16a34a;">-</div></div>
+          <div class="summary-item"><label>Ongoing Loan Amt</label><div id="member-total-loan" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Current Loan Interest</label><div id="member-current-loan-interest" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Total Loan Interest</label><div id="member-total-loan-interest" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Current Install. Paid</label><div id="member-loan-install" style="color: #16a34a;">-</div></div>
           <div class="summary-item"><label>Remaining Balance</label><div id="member-loan-remaining" style="color: #dc2626; font-size: 22px;">-</div></div>
           <div class="summary-item"><label>Loan Taken Date</label><div id="member-loan-taken-date" style="color: #475569; font-size: 15px;">-</div></div>
           <div class="summary-item"><label>Maturity Date</label><div id="member-maturity-date" style="color: #475569; font-size: 15px;">-</div></div>
         </div>
       </div>
 
-      <!-- OVERALL KOSH SUMMARY -->
       <div id="overall-kosh-summary" class="kosh-summary hidden">
         <h3 style="margin-top:0; border-bottom: 2px solid #86efac; color: #166534; font-size: 18px; font-weight: 800;">🏦 Overall Kosh Summary (All 6 Members)</h3>
         <div class="summary-grid">
           <div class="summary-item"><label>Total Deposit</label><div id="sum-all-deposit">-</div></div>
-          <div class="summary-item"><label>Total Loan Amount</label><div id="sum-all-loan-amt">-</div></div>
+          <div class="summary-item"><label>Ongoing Loan Amt</label><div id="sum-all-loan-amt">-</div></div>
           <div class="summary-item"><label>Balance after Loan</label><div id="sum-all-balance-after-loan" style="color: #2563eb;">-</div></div>
-          <div class="summary-item"><label>Installment Paid</label><div id="sum-all-loan-install">-</div></div>
-          <div class="summary-item"><label>Interest Balance</label><div id="sum-all-loan-interest">-</div></div>
+          <div class="summary-item"><label>Current Install. Paid</label><div id="sum-all-loan-install">-</div></div>
+          <div class="summary-item"><label>Total Interest</label><div id="sum-all-loan-interest">-</div></div>
           <div class="summary-item"><label style="color:#dc2626;">Remaining Total</label><div id="sum-all-grand-total" style="color: #dc2626; font-size: 22px;">-</div></div>
         </div>
       </div>
 
-      <!-- ADMIN CONTROLS -->
       <div id="admin-controls-section" class="admin-controls hidden">
         <div class="control-row">
           <div class="control-group">
@@ -376,7 +203,6 @@
             </select>
           </div>
         </div>
-        
         <div class="control-row" style="border-top: 1px solid #bfdbfe; padding-top: 15px;">
           <div class="control-group">
             <label>📅 Record Year</label>
@@ -470,9 +296,10 @@
       <tr><th>Description</th><th class="amount-col">Amount / Details</th></tr>
       <tr><td>Total Deposit Amount</td><td class="amount-col" id="print-deposit"></td></tr>
       <tr><td>Total Fine</td><td class="amount-col" id="print-fine"></td></tr>
-      <tr><td>Total Loan Amount Taken</td><td class="amount-col" id="print-loan-amt"></td></tr>
-      <tr><td>Total Loan Interest</td><td class="amount-col" id="print-loan-interest"></td></tr>
-      <tr><td>Total Loan Installment Paid</td><td class="amount-col" id="print-loan-install"></td></tr>
+      <tr><td>Ongoing Loan Amount</td><td class="amount-col" id="print-loan-amt"></td></tr>
+      <tr><td>Current Loan Interest</td><td class="amount-col" id="print-current-loan-interest"></td></tr>
+      <tr><td>Total Loan Interest (All Time)</td><td class="amount-col" id="print-total-loan-interest"></td></tr>
+      <tr><td>Current Installment Paid</td><td class="amount-col" id="print-loan-install"></td></tr>
       <tr class="highlight"><td><strong>Remaining Loan Balance</strong></td><td class="amount-col" id="print-loan-remaining"></td></tr>
       <tr><td>Loan Taken Date</td><td class="amount-col" id="print-loan-taken"></td></tr>
       <tr><td>Loan Maturity Date</td><td class="amount-col" id="print-maturity"></td></tr>
@@ -531,19 +358,21 @@
     <table class="print-table">
       <tr>
         <th>Member Name</th>
-        <th class="amount-col">Total Loan Amt</th>
-        <th class="amount-col">Loan Interest</th>
-        <th class="amount-col">Installment Paid</th>
-        <th class="amount-col">Remaining Balance</th>
-        <th>Loan Taken Date</th>
-        <th>Maturity Date</th>
+        <th class="amount-col">Ongoing Loan</th>
+        <th class="amount-col">Current Interest</th>
+        <th class="amount-col">Total Interest</th>
+        <th class="amount-col">Install. Paid</th>
+        <th class="amount-col">Remaining</th>
+        <th>Loan Taken</th>
+        <th>Maturity</th>
       </tr>
       <tbody id="print-loan-tbody"></tbody>
       <tfoot>
         <tr class="highlight">
           <td><strong>OVERALL TOTALS</strong></td>
           <td class="amount-col" id="print-loan-amt"></td>
-          <td class="amount-col" id="print-loan-interest"></td>
+          <td class="amount-col" id="print-current-loan-interest"></td>
+          <td class="amount-col" id="print-total-loan-interest"></td>
           <td class="amount-col" id="print-loan-install"></td>
           <td class="amount-col" id="print-loan-remaining"></td>
           <td colspan="2"></td>
@@ -555,7 +384,7 @@
     </div>
   </div>
 
-  <script>
+    <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRFiNkrWT0zdyUNsHUiW9bMh5DbqV0UZ-pnRMhfTmtxeCi8Vw6OWcv53lBLt8b6p3m/exec";
     let currentTabName = '', currentUserRole = 'Member', isEditMode = false, currentTransactionsData = [];
     let currentMemberName = ''; 
@@ -563,13 +392,8 @@
     function toggleInfoSection() {
       const section = document.getElementById('info-section');
       const icon = document.getElementById('info-toggle-icon');
-      if (section.classList.contains('hidden')) {
-        section.classList.remove('hidden');
-        icon.textContent = '▲';
-      } else {
-        section.classList.add('hidden');
-        icon.textContent = '▼';
-      }
+      if (section.classList.contains('hidden')) { section.classList.remove('hidden'); icon.textContent = '▲'; } 
+      else { section.classList.add('hidden'); icon.textContent = '▼'; }
     }
 
     function populateDateDropdowns() {
@@ -597,15 +421,11 @@
       const monthSel = document.getElementById('admin-print-month');
       yearSel.innerHTML = ''; monthSel.innerHTML = '';
       for (let y = 2078; y <= 2088; y++) yearSel.add(new Option(y, y));
-      ["Baishakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"].forEach(m => {
-        monthSel.add(new Option(m, m));
-      });
-      yearSel.value = "2081"; 
-      monthSel.value = "Baishakh"; 
+      ["Baishakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin", "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"].forEach(m => { monthSel.add(new Option(m, m)); });
+      yearSel.value = "2081"; monthSel.value = "Baishakh"; 
     }
 
-    populateDateDropdowns();
-    populateAdminPrintDropdowns();
+    populateDateDropdowns(); populateAdminPrintDropdowns();
 
     function showView(viewId) {
       document.getElementById('login-view').classList.add('hidden');
@@ -685,7 +505,7 @@
       try {
         const res = await callGAS({ action: 'getOverallSummary' });
         if (res.success && res.data) {
-          const fmt = (val) => { const num = parseFloat(val); return (isNaN(num)) ? "-" : num.toFixed(2); };
+          const fmt = (val) => { const num = parseFloat(val); return (isNaN(num)) ? "0.00" : num.toFixed(2); };
           document.getElementById('sum-all-deposit').textContent = fmt(res.data.deposit);
           document.getElementById('sum-all-loan-amt').textContent = fmt(res.data.loanAmt);
           document.getElementById('sum-all-balance-after-loan').textContent = fmt(res.data.balanceAfterLoan);
@@ -754,7 +574,12 @@
       toggleLoading('store-btn', false, btnText);
     }
 
-    const fmt = (val) => { if (val === "" || val === null || val === undefined) return "-"; const num = parseFloat(val); return isNaN(num) ? "-" : num.toFixed(2); };
+    // UPDATED: Never returns blank, always returns "0.00" for missing/zero values
+    const fmt = (val) => { 
+      if (val === "" || val === null || val === undefined) return "0.00"; 
+      const num = parseFloat(val); 
+      return isNaN(num) ? "0.00" : num.toFixed(2); 
+    };
 
     async function handleFetch() {
       const tbody = document.getElementById('tx-body');
@@ -766,35 +591,54 @@
         tbody.innerHTML = ''; currentTransactionsData = res.data || [];
         if (currentTransactionsData.length === 0) {
           tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #64748b;">No transactions found yet.</td></tr>`;
-          ['member-loan-amt', 'member-fine', 'member-total-loan', 'member-loan-interest', 'member-loan-install', 'member-loan-remaining'].forEach(id => document.getElementById(id).textContent = "0.00");
+          ['member-loan-amt', 'member-fine', 'member-total-loan', 'member-current-loan-interest', 'member-total-loan-interest', 'member-loan-install', 'member-loan-remaining'].forEach(id => document.getElementById(id).textContent = "0.00");
           document.getElementById('member-loan-taken-date').textContent = "-"; document.getElementById('member-maturity-date').textContent = "-";
           document.getElementById('member-loan-summary').classList.remove('hidden');
-          updatePrintData(0, 0, 0, 0, 0, 0, "-", "-"); return;
+          updatePrintData(0, 0, 0, 0, 0, 0, 0, "-", "-"); return;
         }
 
-        let totals = { deposit: 0, loanInstall: 0, loanInterest: 0, loanAmt: 0, fine: 0, grandTotal: 0 };
-        let currentYear = ''; let latestLoanTakenDate = "-"; let latestMaturityDate = "-";
+        let tableTotals = { deposit: 0, loanInstall: 0, loanInterest: 0, loanAmt: 0, fine: 0, grandTotal: 0 };
+        currentTransactionsData.forEach(row => {
+          tableTotals.deposit += parseFloat(row.deposit) || 0;
+          tableTotals.loanInstall += parseFloat(row.loanInstall) || 0;
+          tableTotals.loanInterest += parseFloat(row.loanInterest) || 0;
+          tableTotals.loanAmt += parseFloat(row.loanAmt) || 0;
+          tableTotals.fine += parseFloat(row.fine) || 0;
+          tableTotals.grandTotal += parseFloat(row.grandTotal) || 0;
+        });
+
+        let currentLoanAmount = 0, currentInstallmentPaid = 0, currentLoanInterest = 0;
+        let latestLoanTakenDate = "-", latestMaturityDate = "-";
 
         for (let i = currentTransactionsData.length - 1; i >= 0; i--) {
           const row = currentTransactionsData[i];
-          if (parseFloat(row.loanAmt) > 0 || (row.lYear && row.lMonth)) {
-            latestLoanTakenDate = (row.lYear && row.lMonth && row.lDay) ? `${row.lYear} ${row.lMonth} ${row.lDay}` : "-";
-            latestMaturityDate = (row.mYear && row.mMonth && row.mDay) ? `${row.mYear} ${row.mMonth} ${row.mDay}` : "-"; break;
+          const loanAmt = parseFloat(row.loanAmt) || 0;
+          if (loanAmt > 0) {
+            let installmentsPaid = 0, interestForThisLoan = 0;
+            for (let j = i; j < currentTransactionsData.length; j++) {
+              installmentsPaid += parseFloat(currentTransactionsData[j].loanInstall) || 0;
+              interestForThisLoan += parseFloat(currentTransactionsData[j].loanInterest) || 0;
+            }
+            const remaining = loanAmt - installmentsPaid;
+            if (remaining > 0) {
+              currentLoanAmount = loanAmt;
+              currentInstallmentPaid = installmentsPaid;
+              currentLoanInterest = interestForThisLoan;
+              if (row.lYear && row.lMonth && row.lDay) latestLoanTakenDate = `${row.lYear} ${row.lMonth} ${row.lDay}`;
+              if (row.mYear && row.mMonth && row.mDay) latestMaturityDate = `${row.mYear} ${row.mMonth} ${row.mDay}`;
+              break;
+            }
           }
         }
 
-        currentTransactionsData.forEach(row => {
-          totals.deposit += parseFloat(row.deposit) || 0; totals.loanInstall += parseFloat(row.loanInstall) || 0;
-          totals.loanInterest += parseFloat(row.loanInterest) || 0; totals.loanAmt += parseFloat(row.loanAmt) || 0;
-          totals.fine += parseFloat(row.fine) || 0; totals.grandTotal += parseFloat(row.grandTotal) || 0;
+        const remainingLoan = currentLoanAmount > 0 ? (currentLoanAmount - currentInstallmentPaid) : 0;
 
-          if (row.tYear !== currentYear) {
-            currentYear = row.tYear;
+        currentTransactionsData.forEach(row => {
+          if (row.tYear !== (currentTransactionsData[currentTransactionsData.indexOf(row) - 1]?.tYear || '')) {
             const yearRow = document.createElement('tr');
-            yearRow.innerHTML = `<td colspan="${colCount}" class="year-header">📅 Year: ${currentYear} B.S.</td>`;
+            yearRow.innerHTML = `<td colspan="${colCount}" class="year-header">📅 Year: ${row.tYear} B.S.</td>`;
             tbody.appendChild(yearRow);
           }
-
           const tr = document.createElement('tr');
           const transDate = `${row.tYear} ${row.tMonth} ${row.tDay}`;
           const loanDate = (row.lYear && row.lMonth && row.lDay) ? `${row.lYear} ${row.lMonth} ${row.lDay}` : '-';
@@ -803,32 +647,44 @@
           tbody.appendChild(tr);
         });
 
-        const remainingLoan = totals.loanAmt - totals.loanInstall;
-        document.getElementById('member-loan-amt').textContent = fmt(totals.deposit); document.getElementById('member-fine').textContent = fmt(totals.fine);
-        document.getElementById('member-total-loan').textContent = fmt(totals.loanAmt); document.getElementById('member-loan-interest').textContent = fmt(totals.loanInterest);
-        document.getElementById('member-loan-install').textContent = fmt(totals.loanInstall); document.getElementById('member-loan-remaining').textContent = fmt(remainingLoan);
-        document.getElementById('member-loan-taken-date').textContent = latestLoanTakenDate; document.getElementById('member-maturity-date').textContent = latestMaturityDate;
+        document.getElementById('member-loan-amt').textContent = fmt(tableTotals.deposit); 
+        document.getElementById('member-fine').textContent = fmt(tableTotals.fine); 
+        document.getElementById('member-total-loan').textContent = fmt(currentLoanAmount); 
+        document.getElementById('member-current-loan-interest').textContent = fmt(currentLoanInterest); 
+        document.getElementById('member-total-loan-interest').textContent = fmt(tableTotals.loanInterest); 
+        document.getElementById('member-loan-install').textContent = fmt(currentInstallmentPaid); 
+        document.getElementById('member-loan-remaining').textContent = fmt(remainingLoan); 
+        document.getElementById('member-loan-taken-date').textContent = latestLoanTakenDate;
+        document.getElementById('member-maturity-date').textContent = latestMaturityDate;
         document.getElementById('member-loan-summary').classList.remove('hidden');
 
-        updatePrintData(totals.deposit, totals.fine, totals.loanAmt, totals.loanInterest, totals.loanInstall, remainingLoan, latestLoanTakenDate, latestMaturityDate);
+        updatePrintData(tableTotals.deposit, tableTotals.fine, currentLoanAmount, currentLoanInterest, tableTotals.loanInterest, currentInstallmentPaid, remainingLoan, latestLoanTakenDate, latestMaturityDate);
 
-        document.getElementById('sum-deposit').textContent = fmt(totals.deposit); document.getElementById('sum-loan-install').textContent = fmt(totals.loanInstall);
-        document.getElementById('sum-loan-interest').textContent = fmt(totals.loanInterest); document.getElementById('sum-loan-amt').textContent = fmt(totals.loanAmt);
-        document.getElementById('sum-fine').textContent = fmt(totals.fine); document.getElementById('sum-grand-total').textContent = fmt(totals.grandTotal);
+        document.getElementById('sum-deposit').textContent = fmt(tableTotals.deposit); 
+        document.getElementById('sum-loan-install').textContent = fmt(tableTotals.loanInstall); 
+        document.getElementById('sum-loan-interest').textContent = fmt(tableTotals.loanInterest); 
+        document.getElementById('sum-loan-amt').textContent = fmt(tableTotals.loanAmt);
+        document.getElementById('sum-fine').textContent = fmt(tableTotals.fine); 
+        document.getElementById('sum-grand-total').textContent = fmt(tableTotals.grandTotal); 
         document.getElementById('tx-foot').classList.remove('hidden');
       } catch (err) {
         tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #dc2626;">Error: ${err.message}</td></tr>`;
       }
     }
 
-    function updatePrintData(deposit, fine, loanAmt, loanInterest, loanInstall, remaining, takenDate, maturityDate) {
+    function updatePrintData(deposit, fine, currentLoanAmount, currentLoanInterest, totalLoanInterest, currentInstallmentPaid, remainingLoan, takenDate, maturityDate) {
       document.getElementById('print-member-name').textContent = currentMemberName || "Unknown Member";
       const today = new Date();
       document.getElementById('print-date').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-      document.getElementById('print-deposit').textContent = fmt(deposit); document.getElementById('print-fine').textContent = fmt(fine);
-      document.getElementById('print-loan-amt').textContent = fmt(loanAmt); document.getElementById('print-loan-interest').textContent = fmt(loanInterest);
-      document.getElementById('print-loan-install').textContent = fmt(loanInstall); document.getElementById('print-loan-remaining').textContent = fmt(remaining);
-      document.getElementById('print-loan-taken').textContent = takenDate; document.getElementById('print-maturity').textContent = maturityDate;
+      document.getElementById('print-deposit').textContent = fmt(deposit); 
+      document.getElementById('print-fine').textContent = fmt(fine);
+      document.getElementById('print-loan-amt').textContent = fmt(currentLoanAmount); 
+      document.getElementById('print-current-loan-interest').textContent = fmt(currentLoanInterest);
+      document.getElementById('print-total-loan-interest').textContent = fmt(totalLoanInterest);
+      document.getElementById('print-loan-install').textContent = fmt(currentInstallmentPaid); 
+      document.getElementById('print-loan-remaining').textContent = fmt(remainingLoan);
+      document.getElementById('print-loan-taken').textContent = takenDate; 
+      document.getElementById('print-maturity').textContent = maturityDate;
     }
 
     function printMemberDetails() {
@@ -856,12 +712,10 @@
         if (res.success && res.data) {
           tbody.innerHTML = '';
           let totals = { deposit: 0, loanInstall: 0, loanInterest: 0, loanAmt: 0, fine: 0, grandTotal: 0 };
-          
           res.data.forEach(member => {
             totals.deposit += member.deposit; totals.loanInstall += member.loanInstall;
             totals.loanInterest += member.loanInterest; totals.loanAmt += member.loanAmt;
             totals.fine += member.fine; totals.grandTotal += member.grandTotal;
-            
             const tr = document.createElement('tr');
             tr.innerHTML = `<td style="text-align:left; font-weight:bold;">${member.memberName}</td>
               <td class="amount-col">${fmt(member.deposit)}</td><td class="amount-col">${fmt(member.loanAmt)}</td>
@@ -869,17 +723,14 @@
               <td class="amount-col">${fmt(member.fine)}</td><td class="amount-col">${fmt(member.grandTotal)}</td>`;
             tbody.appendChild(tr);
           });
-          
           document.getElementById('print-monthly-deposit').textContent = fmt(totals.deposit);
           document.getElementById('print-monthly-loan-amt').textContent = fmt(totals.loanAmt);
           document.getElementById('print-monthly-loan-install').textContent = fmt(totals.loanInstall);
           document.getElementById('print-monthly-loan-interest').textContent = fmt(totals.loanInterest);
           document.getElementById('print-monthly-fine').textContent = fmt(totals.fine);
           document.getElementById('print-monthly-grand-total').textContent = fmt(totals.grandTotal);
-          
           const today = new Date();
           document.getElementById('print-monthly-date').textContent = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-          
           window.print();
           setTimeout(() => document.getElementById('print-monthly-area').classList.remove('active-print'), 1000);
         }
@@ -892,35 +743,40 @@
       if (currentUserRole !== 'Admin') { alert("Only Administrators can print the loan details report."); return; }
       
       const tbody = document.getElementById('print-loan-tbody');
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Loading data...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Loading data...</td></tr>';
       document.getElementById('print-loan-details-area').classList.add('active-print');
       
       try {
         const res = await callGAS({ action: 'getAllMembersLoanDetails' });
         if (res.success && res.data) {
           tbody.innerHTML = '';
-          let totals = { loanInstall: 0, loanInterest: 0, loanAmt: 0, remaining: 0 };
+          let totals = { loanInstall: 0, currentLoanInterest: 0, totalLoanInterest: 0, loanAmt: 0, remaining: 0 };
           
           res.data.forEach(member => {
-            const remaining = member.loanAmt - member.loanInstall;
-            totals.loanInstall += member.loanInstall; totals.loanInterest += member.loanInterest;
-            totals.loanAmt += member.loanAmt; totals.remaining += remaining;
+            totals.loanInstall += parseFloat(member.loanInstall) || 0; 
+            totals.currentLoanInterest += parseFloat(member.currentLoanInterest) || 0;
+            totals.totalLoanInterest += parseFloat(member.totalLoanInterest) || 0;
+            totals.loanAmt += parseFloat(member.loanAmt) || 0; 
+            totals.remaining += parseFloat(member.remaining) || 0;
             
             const tr = document.createElement('tr');
             tr.innerHTML = `
               <td style="text-align:left; font-weight:bold;">${member.memberName}</td>
               <td class="amount-col">${fmt(member.loanAmt)}</td>
-              <td class="amount-col">${fmt(member.loanInterest)}</td>
+              <td class="amount-col">${fmt(member.currentLoanInterest)}</td>
+              <td class="amount-col">${fmt(member.totalLoanInterest)}</td>
               <td class="amount-col">${fmt(member.loanInstall)}</td>
-              <td class="amount-col" style="color: #dc2626;">${fmt(remaining)}</td>
-              <td style="text-align:center;">${member.latestLoanTakenDate}</td>
-              <td style="text-align:center;">${member.latestMaturityDate}</td>
+              <td class="amount-col" style="color: #dc2626;">${fmt(member.remaining)}</td>
+              <td style="text-align:center; font-size:12px;">${member.latestLoanTakenDate}</td>
+              <td style="text-align:center; font-size:12px;">${member.latestMaturityDate}</td>
             `;
             tbody.appendChild(tr);
           });
           
+          // These IDs exactly match the HTML tfoot IDs
           document.getElementById('print-loan-amt').textContent = fmt(totals.loanAmt);
-          document.getElementById('print-loan-interest').textContent = fmt(totals.loanInterest);
+          document.getElementById('print-current-loan-interest').textContent = fmt(totals.currentLoanInterest);
+          document.getElementById('print-total-loan-interest').textContent = fmt(totals.totalLoanInterest);
           document.getElementById('print-loan-install').textContent = fmt(totals.loanInstall);
           document.getElementById('print-loan-remaining').textContent = fmt(totals.remaining);
           
@@ -931,7 +787,7 @@
           setTimeout(() => document.getElementById('print-loan-details-area').classList.remove('active-print'), 1000);
         }
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#dc2626;">Error: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#dc2626;">Error: ${err.message}</td></tr>`;
       }
     }
 
