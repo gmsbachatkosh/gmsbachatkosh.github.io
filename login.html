@@ -5,75 +5,242 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GMS Bachat Kosh</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
-    .container { max-width: 950px; margin: 20px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
-    h2 { text-align: center; color: #1a73e8; margin-top: 0; }
-    h3 { color: #555; border-bottom: 2px solid #1a73e8; padding-bottom: 5px; margin-top: 25px; }
-    h4 { margin-top: 0; color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 5px; }
-    .form-group { margin-bottom: 15px; }
+    /* GLOBAL & PREMIUM BACKGROUND */
+    body { 
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%); 
+      margin: 0; 
+      padding: 20px; 
+      color: #333; 
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container { 
+      width: 100%;
+      max-width: 950px; 
+      background: rgba(255, 255, 255, 0.98); 
+      padding: 40px; 
+      border-radius: 20px; 
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    /* PREMIUM LOGIN VIEW STYLING */
+    #login-view {
+      max-width: 420px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    }
+    .login-icon svg { width: 32px; height: 32px; color: white; }
+
+    #login-view h2 { 
+      font-size: 28px; 
+      font-weight: 800; 
+      color: #0f172a; 
+      margin: 0 0 8px 0; 
+      letter-spacing: -0.5px;
+    }
+    
+    .login-subtitle {
+      color: #64748b;
+      font-size: 15px;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    /* FORM ELEMENTS */
+    .form-group { margin-bottom: 20px; text-align: left; }
     .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
     .form-row .form-group { flex: 1; min-width: 120px; }
-    label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; font-size: 14px; }
-    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
-    input:focus, select:focus { border-color: #1a73e8; outline: none; }
-    button { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 10px; transition: background 0.3s; }
-    button:hover { background-color: #1557b0; }
-    button:disabled { background-color: #ccc; cursor: not-allowed; }
-    .secondary-btn { background-color: #f8f9fa; color: #1a73e8; border: 1px solid #1a73e8; }
-    .secondary-btn:hover { background-color: #e8f0fe; }
-    .cancel-btn { background-color: #6c757d; margin-top: 10px; }
-    .cancel-btn:hover { background-color: #5a6268; }
-    .logout-btn { background-color: #dc3545; width: auto; padding: 8px 12px; margin: 0; display: flex; align-items: center; justify-content: center; }
-    .logout-btn:hover { background-color: #c82333; }
-    .print-btn { background-color: #6c757d; width: auto; padding: 10px 16px; margin-left: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; }
-    .print-btn:hover { background-color: #5a6268; }
-    .hidden { display: none !important; }
-    .message { padding: 12px; margin-bottom: 15px; border-radius: 6px; text-align: center; font-size: 14px; font-weight: 500; }
-    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-    .table-container { overflow-y: auto; max-height: 500px; margin-top: 15px; border: 1px solid #e0e0e0; border-radius: 6px; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 850px; }
-    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: right; }
-    th:first-child, td:first-child { text-align: left; }
-    th { background-color: #f8f9fa; color: #333; font-weight: 600; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); }
-    tr:nth-child(even) { background-color: #fcfcfc; }
-    tfoot tr { background-color: #e8f0fe; font-weight: bold; }
-    tfoot td { position: sticky; bottom: 0; background-color: #e8f0fe; z-index: 5; box-shadow: 0 -2px 2px -1px rgba(0, 0, 0, 0.1); }
-    .year-header { background-color: #1a73e8; color: white; font-weight: bold; text-align: left; padding-left: 15px !important; font-size: 14px; }
-    .admin-badge { background-color: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-left: 8px; vertical-align: middle; }
-    .edit-btn { background-color: #ffc107; color: #000; padding: 6px 12px; font-size: 12px; margin-top: 0; width: auto; border-radius: 4px; border: none; cursor: pointer; }
-    .edit-btn:hover { background-color: #e0a800; }
     
-    .admin-controls { background-color: #e8f0fe; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #1a73e8; display: flex; flex-direction: column; gap: 15px; }
+    label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-weight: 600; 
+      color: #334155; 
+      font-size: 13px; 
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    input, select { 
+      width: 100%; 
+      padding: 14px 16px; 
+      border: 2px solid #e2e8f0; 
+      border-radius: 12px; 
+      box-sizing: border-box; 
+      font-size: 15px; 
+      background-color: #f8fafc;
+      transition: all 0.2s ease;
+      color: #0f172a;
+    }
+    
+    input:focus, select:focus { 
+      border-color: #3b82f6; 
+      background-color: #ffffff;
+      outline: none; 
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+    }
+
+    /* PREMIUM BUTTONS */
+    button { 
+      width: 100%; 
+      padding: 14px; 
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); 
+      color: white; 
+      border: none; 
+      border-radius: 12px; 
+      cursor: pointer; 
+      font-size: 16px; 
+      font-weight: 700; 
+      margin-top: 10px; 
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+      letter-spacing: 0.3px;
+    }
+    
+    button:hover { 
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
+    }
+    
+    button:active { transform: translateY(0); }
+    button:disabled { background: #cbd5e1; cursor: not-allowed; transform: none; box-shadow: none; }
+    
+    .secondary-btn { 
+      background: transparent; 
+      color: #2563eb; 
+      border: 2px solid #e2e8f0; 
+      box-shadow: none;
+      margin-top: 12px;
+    }
+    .secondary-btn:hover { 
+      background: #eff6ff; 
+      border-color: #bfdbfe; 
+      color: #1d4ed8;
+      transform: translateY(0);
+      box-shadow: none;
+    }
+    
+    .cancel-btn { background: #64748b; box-shadow: 0 4px 14px 0 rgba(100, 116, 139, 0.39); }
+    .cancel-btn:hover { background: #475569; box-shadow: 0 6px 20px rgba(100, 116, 139, 0.23); }
+    
+    .logout-btn { 
+      background: #ef4444; 
+      width: auto; 
+      padding: 10px 16px; 
+      margin: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+    }
+    .logout-btn:hover { background: #dc2626; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.23); }
+    
+    .print-btn { 
+      background: #475569; 
+      width: auto; 
+      padding: 10px 16px; 
+      margin-left: 10px; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+      font-size: 14px; 
+      box-shadow: 0 4px 14px 0 rgba(71, 85, 105, 0.39);
+    }
+    .print-btn:hover { background: #334155; box-shadow: 0 6px 20px rgba(71, 85, 105, 0.23); transform: translateY(-2px); }
+
+    .hidden { display: none !important; }
+    
+    .message { 
+      padding: 14px; 
+      margin-bottom: 20px; 
+      border-radius: 12px; 
+      text-align: center; 
+      font-size: 14px; 
+      font-weight: 600; 
+    }
+    .success { background-color: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    
+    /* DASHBOARD SPECIFIC OVERRIDES */
+    #dashboard-view .container {
+      /* Reset some login-specific styles for the dashboard */
+      max-width: 950px;
+      padding: 30px;
+    }
+    
+    .table-container { overflow-y: auto; max-height: 500px; margin-top: 15px; border: 1px solid #e2e8f0; border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 850px; }
+    th, td { border: 1px solid #e2e8f0; padding: 12px 10px; text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { background-color: #f8fafc; color: #334155; font-weight: 700; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #e2e8f0; }
+    tr:nth-child(even) { background-color: #f8fafc; }
+    tfoot tr { background-color: #eff6ff; font-weight: bold; }
+    tfoot td { position: sticky; bottom: 0; background-color: #eff6ff; z-index: 5; border-top: 2px solid #bfdbfe; }
+    
+    .year-header { background-color: #1e3a8a !important; color: white; font-weight: bold; text-align: left; padding-left: 15px !important; font-size: 14px; }
+    .admin-badge { background-color: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-left: 8px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.5px; }
+    .edit-btn { background: #f59e0b; color: #000; padding: 6px 12px; font-size: 12px; margin-top: 0; width: auto; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3); font-weight: 600; }
+    .edit-btn:hover { background: #d97706; transform: translateY(-1px); }
+    
+    .admin-controls { background-color: #eff6ff; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #bfdbfe; display: flex; flex-direction: column; gap: 15px; }
     .control-row { display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end; }
     .control-group { flex: 1; min-width: 150px; }
-    .control-group label { margin-bottom: 4px; font-size: 13px; color: #1a73e8; font-weight: bold; display: block; }
-    .control-group select { width: 100%; margin-top: 0; }
+    .control-group label { margin-bottom: 6px; font-size: 12px; color: #1e40af; font-weight: 700; display: block; }
+    .control-group select { width: 100%; margin-top: 0; background: white; }
     .btn-group { flex: 0 0 auto; display: flex; gap: 10px; flex-wrap: wrap; }
 
-    .kosh-summary, .loan-summary { background-color: #e6f4ea; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #28a745; }
-    .loan-summary { background-color: #e7f1ff; border: 1px solid #0d6efd; }
+    .kosh-summary, .loan-summary { background-color: #f0fdf4; padding: 24px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #bbf7d0; }
+    .loan-summary { background-color: #eff6ff; border: 1px solid #bfdbfe; }
     .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; margin-top: 15px; }
-    .summary-item { background: white; padding: 15px 10px; border-radius: 8px; border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .summary-item label { display: block; font-size: 13px; color: #555; margin-bottom: 8px; font-weight: 600; }
-    .summary-item div { font-weight: bold; font-size: 18px; }
-    .section-title { font-size: 15px; font-weight: bold; color: #1a73e8; margin-bottom: 10px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
-    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .dashboard-header h2 { text-align: left; margin: 0; }
+    .summary-item { background: white; padding: 18px 10px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s; }
+    .summary-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .summary-item label { display: block; font-size: 12px; color: #64748b; margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .summary-item div { font-weight: 800; font-size: 20px; color: #0f172a; }
+    
+    .section-title { font-size: 14px; font-weight: 800; color: #1e40af; margin-bottom: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0; }
+    .dashboard-header h2 { text-align: left; margin: 0; font-size: 24px; font-weight: 800; color: #0f172a; }
 
     /* Info Section Styles */
-    .info-section { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 20px; }
+    .info-section { background: #f8fafc; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px; }
     .info-grid { display: flex; flex-wrap: wrap; gap: 30px; }
     .info-block { flex: 1; min-width: 280px; }
-    .contact-list { list-style: none; padding: 0; margin: 0; line-height: 2; }
-    .contact-list a { color: #1a73e8; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
-    .contact-list a:hover { text-decoration: underline; }
-    .account-number { font-family: 'Courier New', Courier, monospace; font-size: 16px; background: #e8f0fe; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #1a73e8; }
+    .info-block h4 { margin-top: 0; color: #1e3a8a; border-bottom: 2px solid #bfdbfe; padding-bottom: 8px; font-size: 16px; font-weight: 800; }
+    .contact-list { list-style: none; padding: 0; margin: 0; line-height: 2.2; }
+    .contact-list a { color: #2563eb; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s; }
+    .contact-list a:hover { color: #1d4ed8; text-decoration: underline; }
+    .account-number { font-family: 'Courier New', Courier, monospace; font-size: 16px; background: #dbeafe; padding: 4px 10px; border-radius: 6px; font-weight: 800; color: #1e40af; letter-spacing: 0.5px; }
 
     /* PRINT STYLES */
     #print-area, #print-monthly-area, #print-loan-details-area { display: none; }
     @page { size: A4 portrait; margin: 1.5cm; }
     @media print {
+      body { background: white; display: block; }
       body * { visibility: hidden; }
       #print-area.active-print, #print-area.active-print *,
       #print-monthly-area.active-print, #print-monthly-area.active-print *,
@@ -100,19 +267,37 @@
 </head>
 <body>
   <div class="container">
+    <!-- PREMIUM LOGIN VIEW -->
     <div id="login-view">
-      <h2>🏦 GMS Bachat Kosh</h2>
+      <div class="login-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      </div>
+      <h2>GMS Bachat Kosh</h2>
+      <p class="login-subtitle">Secure Member Portal</p>
+      
       <div id="login-msg" class="message hidden"></div>
-      <div class="form-group"><label>Username</label><input type="text" id="login-username" placeholder="Enter your username"></div>
-      <div class="form-group"><label>Password</label><input type="password" id="login-password" placeholder="Enter your password"></div>
-      <button id="login-btn" onclick="handleLogin()">Login</button>
+      
+      <div class="form-group">
+        <label for="login-username">Username</label>
+        <input type="text" id="login-username" placeholder="Enter your username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button id="login-btn" onclick="handleLogin()">Sign In Securely</button>
     </div>
 
+    <!-- DASHBOARD VIEW -->
     <div id="dashboard-view" class="hidden">
       <div class="dashboard-header">
         <h2 id="welcome-msg">Welcome</h2>
         <button class="logout-btn" onclick="logout()" title="Logout">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap=" round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Logout
         </button>
       </div>
       <div id="dash-msg" class="message hidden"></div>
@@ -125,15 +310,12 @@
       
       <div id="info-section" class="info-section hidden">
         <div class="info-grid">
-          <!-- Bank Details -->
           <div class="info-block">
             <h4>🏦 GMS Kosh Bank A/C Details</h4>
-            <p style="margin: 10px 0;"><strong>Bank Name:</strong> Himalayan Bank Limited</p>
-            <p style="margin: 10px 0;"><strong>A/C Number:</strong> <span class="account-number">21254325340012</span></p>
-            <p style="margin: 10px 0;"><strong>Account Name:</strong> Bindu/Anil Maharjan</p>
+            <p style="margin: 10px 0; color: #475569;"><strong>Bank Name:</strong> Himalayan Bank Limited</p>
+            <p style="margin: 10px 0; color: #475569;"><strong>A/C Number:</strong> <span class="account-number">21254325340012</span></p>
+            <p style="margin: 10px 0; color: #475569;"><strong>Account Name:</strong> Bindu/Anil Maharjan</p>
           </div>
-          
-          <!-- Contact Details -->
           <div class="info-block">
             <h4>📱 Members Contact Details</h4>
             <ul class="contact-list">
@@ -150,32 +332,32 @@
       
       <!-- MEMBER LOAN SUMMARY -->
       <div id="member-loan-summary" class="loan-summary hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0d6efd; padding-bottom: 10px; margin-bottom: 15px;">
-          <h3 style="margin:0; border:none; color: #084298;">💳 Member Loan & Financial Status</h3>
-          <button id="admin-print-btn" class="print-btn hidden" onclick="printMemberDetails()">🖨️ Print Member Statement</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #bfdbfe; padding-bottom: 10px; margin-bottom: 15px;">
+          <h3 style="margin:0; border:none; color: #1e40af; font-size: 18px; font-weight: 800;">💳 Member Loan & Financial Status</h3>
+          <button id="admin-print-btn" class="print-btn hidden" onclick="printMemberDetails()">🖨️ Print Statement</button>
         </div>
         <div class="summary-grid">
-          <div class="summary-item"><label>Total Deposit</label><div id="member-loan-amt" style="color: #0d6efd;">-</div></div>
-          <div class="summary-item"><label>Total Fine</label><div id="member-fine" style="color: #dc3545;">-</div></div>
-          <div class="summary-item"><label>Total Loan Amount</label><div id="member-total-loan" style="color: #0d6efd;">-</div></div>
-          <div class="summary-item"><label>Total Loan Interest</label><div id="member-loan-interest" style="color: #0d6efd;">-</div></div>
-          <div class="summary-item"><label>Loan Installment Paid</label><div id="member-loan-install" style="color: #198754;">-</div></div>
-          <div class="summary-item"><label>Remaining Loan Balance</label><div id="member-loan-remaining" style="color: #dc3545; font-size: 20px;">-</div></div>
-          <div class="summary-item"><label>Loan Taken Date</label><div id="member-loan-taken-date" style="color: #555; font-size: 16px;">-</div></div>
-          <div class="summary-item"><label>Maturity Date</label><div id="member-maturity-date" style="color: #555; font-size: 16px;">-</div></div>
+          <div class="summary-item"><label>Total Deposit</label><div id="member-loan-amt" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Total Fine</label><div id="member-fine" style="color: #dc2626;">-</div></div>
+          <div class="summary-item"><label>Total Loan Amount</label><div id="member-total-loan" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Total Loan Interest</label><div id="member-loan-interest" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Installment Paid</label><div id="member-loan-install" style="color: #16a34a;">-</div></div>
+          <div class="summary-item"><label>Remaining Balance</label><div id="member-loan-remaining" style="color: #dc2626; font-size: 22px;">-</div></div>
+          <div class="summary-item"><label>Loan Taken Date</label><div id="member-loan-taken-date" style="color: #475569; font-size: 15px;">-</div></div>
+          <div class="summary-item"><label>Maturity Date</label><div id="member-maturity-date" style="color: #475569; font-size: 15px;">-</div></div>
         </div>
       </div>
 
       <!-- OVERALL KOSH SUMMARY -->
       <div id="overall-kosh-summary" class="kosh-summary hidden">
-        <h3 style="margin-top:0; border-bottom: 2px solid #28a745; color: #155724;">🏦 Overall Kosh Summary (All 6 Members)</h3>
+        <h3 style="margin-top:0; border-bottom: 2px solid #86efac; color: #166534; font-size: 18px; font-weight: 800;">🏦 Overall Kosh Summary (All 6 Members)</h3>
         <div class="summary-grid">
           <div class="summary-item"><label>Total Deposit</label><div id="sum-all-deposit">-</div></div>
           <div class="summary-item"><label>Total Loan Amount</label><div id="sum-all-loan-amt">-</div></div>
-          <div class="summary-item"><label>Total Balance after Loan</label><div id="sum-all-balance-after-loan" style="color: #0056b3;">-</div></div>
-          <div class="summary-item"><label>Loan Installment Paid</label><div id="sum-all-loan-install">-</div></div>
-          <div class="summary-item"><label>Loan Interest Balance</label><div id="sum-all-loan-interest">-</div></div>
-          <div class="summary-item"><label style="color:#d9534f;">Remaining Total Balance</label><div id="sum-all-grand-total" style="color: #d9534f; font-size: 20px;">-</div></div>
+          <div class="summary-item"><label>Balance after Loan</label><div id="sum-all-balance-after-loan" style="color: #2563eb;">-</div></div>
+          <div class="summary-item"><label>Installment Paid</label><div id="sum-all-loan-install">-</div></div>
+          <div class="summary-item"><label>Interest Balance</label><div id="sum-all-loan-interest">-</div></div>
+          <div class="summary-item"><label style="color:#dc2626;">Remaining Total</label><div id="sum-all-grand-total" style="color: #dc2626; font-size: 22px;">-</div></div>
         </div>
       </div>
 
@@ -195,7 +377,7 @@
           </div>
         </div>
         
-        <div class="control-row" style="border-top: 1px solid #b3d7ff; padding-top: 15px;">
+        <div class="control-row" style="border-top: 1px solid #bfdbfe; padding-top: 15px;">
           <div class="control-group">
             <label>📅 Record Year</label>
             <select id="admin-print-year"></select>
@@ -205,14 +387,14 @@
             <select id="admin-print-month"></select>
           </div>
           <div class="btn-group">
-            <button id="admin-print-monthly-btn" class="print-btn hidden" onclick="printMonthlySummary()" style="margin: 0;">🖨️ Print Monthly Summary</button>
-            <button id="admin-print-loan-btn" class="print-btn hidden" onclick="printAllMembersLoanDetails()" style="margin: 0; background-color: #1a73e8; color: white;">🖨️ Print All Loan Details</button>
+            <button id="admin-print-monthly-btn" class="print-btn hidden" onclick="printMonthlySummary()" style="margin: 0;">🖨️ Monthly Summary</button>
+            <button id="admin-print-loan-btn" class="print-btn hidden" onclick="printAllMembersLoanDetails()" style="margin: 0; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white;">🖨️ All Loan Details</button>
           </div>
         </div>
       </div>
 
       <div id="add-transaction-section" class="hidden">
-        <h3 id="form-title">➕ Add Transaction <span class="admin-badge">ADMIN ONLY</span></h3>
+        <h3 id="form-title" style="font-size: 18px; font-weight: 800; color: #0f172a;">➕ Add Transaction <span class="admin-badge">Admin Only</span></h3>
         <input type="hidden" id="edit-row-index" value="">
         <div class="section-title">Transaction Date</div>
         <div class="form-row">
@@ -247,9 +429,9 @@
         <button id="cancel-edit-btn" class="cancel-btn hidden" onclick="cancelEdit()">Cancel Edit</button>
       </div>
       
-      <h3>📜 Transaction History</h3>
+      <h3 style="font-size: 18px; font-weight: 800; color: #0f172a;">📜 Transaction History</h3>
       <div style="display: flex; align-items: center; margin-bottom: 10px;">
-        <button class="secondary-btn" onclick="handleFetch()" style="width: auto; padding: 8px 16px; margin: 0;">🔄 Refresh Data</button>
+        <button class="secondary-btn" onclick="handleFetch()" style="width: auto; padding: 10px 16px; margin: 0; font-weight: 600;">🔄 Refresh Data</button>
       </div>
       <div class="table-container">
         <table id="tx-table">
@@ -378,7 +560,6 @@
     let currentTabName = '', currentUserRole = 'Member', isEditMode = false, currentTransactionsData = [];
     let currentMemberName = ''; 
 
-    // Toggle Bank & Contact Info Section
     function toggleInfoSection() {
       const section = document.getElementById('info-section');
       const icon = document.getElementById('info-toggle-icon');
@@ -461,7 +642,7 @@
       const password = document.getElementById('login-password').value.trim();
       if (!username || !password) { showMessage('login-msg', 'Please enter both username and password.', true); return; }
 
-      toggleLoading('login-btn', true, 'Login');
+      toggleLoading('login-btn', true, 'Signing In...');
       try {
         const res = await callGAS({ action: 'login', username, password });
         if (res.success) {
@@ -469,7 +650,7 @@
           currentUserRole = res.role; 
           currentMemberName = res.memberName; 
           let welcomeText = 'Welcome, ' + currentMemberName;
-          if (currentUserRole === 'Admin') welcomeText += ' <span class="admin-badge">ADMIN</span>';
+          if (currentUserRole === 'Admin') welcomeText += ' <span class="admin-badge">Admin</span>';
           document.getElementById('welcome-msg').innerHTML = welcomeText;
           showView('dashboard-view');
           
@@ -497,7 +678,7 @@
           handleFetch();
         } else { showMessage('login-msg', res.message, true); }
       } catch (err) { showMessage('login-msg', 'Error: ' + err.message, true); }
-      toggleLoading('login-btn', false, 'Login');
+      toggleLoading('login-btn', false, 'Sign In Securely');
     }
 
     async function fetchOverallSummary() {
@@ -526,7 +707,7 @@
     function cancelEdit() {
       isEditMode = false;
       document.getElementById('edit-row-index').value = '';
-      document.getElementById('form-title').innerHTML = '➕ Add Transaction <span class="admin-badge">ADMIN ONLY</span>';
+      document.getElementById('form-title').innerHTML = '➕ Add Transaction <span class="admin-badge">Admin Only</span>';
       document.getElementById('store-btn').textContent = 'Save Transaction';
       document.getElementById('cancel-edit-btn').classList.add('hidden');
       ['t-year', 't-month', 't-day', 'l-year', 'l-month', 'l-day', 'm-year', 'm-month', 'm-day', 'tx-deposit', 'tx-loan-install', 'tx-loan-interest', 'tx-loan-amount', 'tx-fine', 'tx-grand-total'].forEach(id => document.getElementById(id).value = "");
@@ -537,7 +718,7 @@
       if (!row) return;
       isEditMode = true;
       document.getElementById('edit-row-index').value = row.rowIndex;
-      document.getElementById('form-title').innerHTML = '✏️ Edit Transaction <span class="admin-badge">ADMIN ONLY</span>';
+      document.getElementById('form-title').innerHTML = '✏️ Edit Transaction <span class="admin-badge">Admin Only</span>';
       document.getElementById('store-btn').textContent = 'Update Transaction';
       document.getElementById('cancel-edit-btn').classList.remove('hidden');
       document.getElementById('t-year').value = row.tYear || ""; document.getElementById('t-month').value = row.tMonth || ""; document.getElementById('t-day').value = row.tDay || "";
@@ -578,13 +759,13 @@
     async function handleFetch() {
       const tbody = document.getElementById('tx-body');
       const colCount = currentUserRole === 'Admin' ? 9 : 8;
-      tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #666;">Loading data...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #64748b;">Loading data...</td></tr>`;
       document.getElementById('tx-foot').classList.add('hidden');
       try {
         const res = await callGAS({ action: 'fetch', tabName: currentTabName });
         tbody.innerHTML = ''; currentTransactionsData = res.data || [];
         if (currentTransactionsData.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #666;">No transactions found yet.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #64748b;">No transactions found yet.</td></tr>`;
           ['member-loan-amt', 'member-fine', 'member-total-loan', 'member-loan-interest', 'member-loan-install', 'member-loan-remaining'].forEach(id => document.getElementById(id).textContent = "0.00");
           document.getElementById('member-loan-taken-date').textContent = "-"; document.getElementById('member-maturity-date').textContent = "-";
           document.getElementById('member-loan-summary').classList.remove('hidden');
@@ -636,7 +817,7 @@
         document.getElementById('sum-fine').textContent = fmt(totals.fine); document.getElementById('sum-grand-total').textContent = fmt(totals.grandTotal);
         document.getElementById('tx-foot').classList.remove('hidden');
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: red;">Error: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="${colCount}" style="text-align:center; padding: 20px; color: #dc2626;">Error: ${err.message}</td></tr>`;
       }
     }
 
@@ -703,7 +884,7 @@
           setTimeout(() => document.getElementById('print-monthly-area').classList.remove('active-print'), 1000);
         }
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#dc2626;">Error: ${err.message}</td></tr>`;
       }
     }
 
@@ -731,7 +912,7 @@
               <td class="amount-col">${fmt(member.loanAmt)}</td>
               <td class="amount-col">${fmt(member.loanInterest)}</td>
               <td class="amount-col">${fmt(member.loanInstall)}</td>
-              <td class="amount-col" style="color: #dc3545;">${fmt(remaining)}</td>
+              <td class="amount-col" style="color: #dc2626;">${fmt(remaining)}</td>
               <td style="text-align:center;">${member.latestLoanTakenDate}</td>
               <td style="text-align:center;">${member.latestMaturityDate}</td>
             `;
@@ -750,7 +931,7 @@
           setTimeout(() => document.getElementById('print-loan-details-area').classList.remove('active-print'), 1000);
         }
       } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:red;">Error: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#dc2626;">Error: ${err.message}</td></tr>`;
       }
     }
 
