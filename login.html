@@ -9,6 +9,7 @@
     .container { max-width: 950px; margin: 20px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
     h2 { text-align: center; color: #1a73e8; margin-top: 0; }
     h3 { color: #555; border-bottom: 2px solid #1a73e8; padding-bottom: 5px; margin-top: 25px; }
+    h4 { margin-top: 0; color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 5px; }
     .form-group { margin-bottom: 15px; }
     .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
     .form-row .form-group { flex: 1; min-width: 120px; }
@@ -60,6 +61,15 @@
     .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .dashboard-header h2 { text-align: left; margin: 0; }
 
+    /* Info Section Styles */
+    .info-section { background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; margin-bottom: 20px; }
+    .info-grid { display: flex; flex-wrap: wrap; gap: 30px; }
+    .info-block { flex: 1; min-width: 280px; }
+    .contact-list { list-style: none; padding: 0; margin: 0; line-height: 2; }
+    .contact-list a { color: #1a73e8; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+    .contact-list a:hover { text-decoration: underline; }
+    .account-number { font-family: 'Courier New', Courier, monospace; font-size: 16px; background: #e8f0fe; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #1a73e8; }
+
     /* PRINT STYLES */
     #print-area, #print-monthly-area, #print-loan-details-area { display: none; }
     @page { size: A4 portrait; margin: 1.5cm; }
@@ -83,8 +93,6 @@
       .print-table th { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-weight: bold; }
       .print-table .amount-col { text-align: right; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
       .print-table .highlight { background-color: #fff3cd !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      
-      /* Updated Print Footer Style */
       .print-footer { margin-top: 60px; display: flex; justify-content: flex-end; }
       .signature-line { border-top: 1px solid #000; width: 250px; text-align: center; padding-top: 8px; font-size: 15px; font-weight: 600; }
     }
@@ -108,6 +116,37 @@
         </button>
       </div>
       <div id="dash-msg" class="message hidden"></div>
+      
+      <!-- BANK & CONTACT INFO (Collapsible) -->
+      <button class="secondary-btn" onclick="toggleInfoSection()" style="width: 100%; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600;">
+        <span>📞 Bank & Contact Details</span>
+        <span id="info-toggle-icon">▼</span>
+      </button>
+      
+      <div id="info-section" class="info-section hidden">
+        <div class="info-grid">
+          <!-- Bank Details -->
+          <div class="info-block">
+            <h4>🏦 GMS Kosh Bank A/C Details</h4>
+            <p style="margin: 10px 0;"><strong>Bank Name:</strong> Himalayan Bank Limited</p>
+            <p style="margin: 10px 0;"><strong>A/C Number:</strong> <span class="account-number">21254325340012</span></p>
+            <p style="margin: 10px 0;"><strong>Account Name:</strong> Bindu/Anil Maharjan</p>
+          </div>
+          
+          <!-- Contact Details -->
+          <div class="info-block">
+            <h4>📱 Members Contact Details</h4>
+            <ul class="contact-list">
+              <li><strong>Anil Maharjan:</strong> <a href="tel:9808276033">📞 9808276033</a>, <a href="tel:9866329793">📞 9866329793</a></li>
+              <li><strong>Bindu Maharjan:</strong> <a href="tel:9851236868">📞 9851236868</a></li>
+              <li><strong>Manisha Maharjan:</strong> <a href="tel:9860811352">📞 9860811352</a></li>
+              <li><strong>Rajeep Maharjan:</strong> <a href="tel:9840099332">📞 9840099332</a></li>
+              <li><strong>Sajina Barahi:</strong> <a href="tel:9849195978">📞 9849195978</a></li>
+              <li><strong>Supreme Chitrakar:</strong> <a href="tel:9801193758">📞 9801193758</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
       
       <!-- MEMBER LOAN SUMMARY -->
       <div id="member-loan-summary" class="loan-summary hidden">
@@ -338,6 +377,19 @@
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzRFiNkrWT0zdyUNsHUiW9bMh5DbqV0UZ-pnRMhfTmtxeCi8Vw6OWcv53lBLt8b6p3m/exec";
     let currentTabName = '', currentUserRole = 'Member', isEditMode = false, currentTransactionsData = [];
     let currentMemberName = ''; 
+
+    // Toggle Bank & Contact Info Section
+    function toggleInfoSection() {
+      const section = document.getElementById('info-section');
+      const icon = document.getElementById('info-toggle-icon');
+      if (section.classList.contains('hidden')) {
+        section.classList.remove('hidden');
+        icon.textContent = '▲';
+      } else {
+        section.classList.add('hidden');
+        icon.textContent = '▼';
+      }
+    }
 
     function populateDateDropdowns() {
       const selects = ['t-year', 'l-year', 'm-year', 't-month', 'l-month', 'm-month', 't-day', 'l-day', 'm-day'];
